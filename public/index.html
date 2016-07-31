@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="./stylesheets/style.css">
+    <script src="./javascripts/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.js"></script>
+    <script src="./javascripts/angular-relative-date.min.js"></script>
+    <script src="./javascripts/imagesloaded.js"></script>
+    <script src="./javascripts/masonry.js"></script>
+    <script src="./javascripts/masonry.pkgd.js"></script>
+    <script src="./javascripts/script.js"></script>
+</head>
+<body ng-app="NewsFeedApp" ng-controller="NewsFeedController" ng-cloak>
+<nav>
+    <ul>
+        <li id="logo"><a href="index.html">NYTimes Feed</a></li>
+        <li class="items"><a  data-scroll href="#!" ng-click="refilter('arts')">arts</a></li>
+        <li class="items"><a data-scroll href="#!" ng-click="refilter('business')">business</a></li>
+        <li class="items"><a data-scroll href="#!" ng-click="refilter('world')">world</a></li>
+    </ul>
+</nav>
+<div class="wrapper">
+<div masonry="" class="container">
+    <div class="masonry-brick" ng-repeat="item in items" ng-click="openLink(item.url)" ng-mouseenter="info=true; reload();" ng-mouseleave="info=false;">
+       <div class="caption">
+        <img class="image" ng-src="{{item.multimedia[1].url}}">
+           <h2><span class="imgTxt">{{item.updated_date.slice(0,19)|relativeDate}}</span></h2>
+           </div>
+        <div  class="footer">
+            <h4 ng-hide="info">{{item.title}}</h4>
+            <p ng-hide="info"><span ng-hide="item.byline">By ANON</span>{{item.byline}}</p>
+            <p class="abstract" ng-show="info">{{item.abstract}}</p>
+        </div>
+    </div>
+    </div>
+</div>
+    <div class="loading" ng-show="loading">
+    </div>
+<div scroll-trigger="loadMoreRecords()" threshold="800"></div>
+
+
+</div>
+</body>
+</html>
